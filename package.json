@@ -11,7 +11,8 @@
     "@iconify-json/eos-icons": "^1.1.1",
     "@tailwindcss/forms": "^0.4.0",
     "dayjs": "^1.10.7",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-gtag": "^2.0.1"
   },
   "devDependencies": {
     "@iconify-json/heroicons-outline": "^1.1.0",
