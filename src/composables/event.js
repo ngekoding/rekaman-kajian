@@ -10,9 +10,10 @@ const fetchEvents = () => {
   loading.value = true
   events.value = []
 
+  const key = 'AIzaSyAy8Kv-25605MUR9_vc335NH-V1izq7IIw'
   const url = new URL('https://sheets.googleapis.com/v4/spreadsheets/1h31fQUdkTUZ31SDr4Eg-OwyQKGh2yCjgT2hyPXWKCAs/values/Form Responses 1')
 
-  fetch(`${url}?key=AIzaSyB168Nwfy1XVN_eGq7yuaCmAljU146E2WQ`)
+  fetch(`${url}?key=${key}`)
     .then(res => res.json())
     .then(data => data.values)
     .then(data => {
@@ -44,6 +45,7 @@ const filterEvent = (filters) => {
     !date
   ) {
     filteredEvents.value = events.value
+    return
   }
 
   filteredEvents.value = events.value.filter(e => {
