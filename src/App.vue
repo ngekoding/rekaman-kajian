@@ -49,7 +49,7 @@ const onFilter = () => {
       </option>
     </select>
     <select v-model="filter.location" class="flex-grow md:flex-grow-0 md:w-[200px] max-w-full">
-      <option value="">Semua Pemateri</option>
+      <option value="">Semua Lokasi</option>
       <option
         v-for="location in locations"
         :key="'location-' + location">
