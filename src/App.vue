@@ -40,23 +40,38 @@ const onFilter = () => {
 
   <!-- Filter form -->
   <section class="container flex flex-wrap gap-3 justify-center">
-    <select v-model="filter.speaker" class="flex-grow md:flex-grow-0 md:w-[200px] max-w-full">
-      <option value="">Semua Pemateri</option>
-      <option
-        v-for="speaker in speakers"
-        :key="'speaker-' + speaker">
-        {{ speaker }}
-      </option>
-    </select>
-    <select v-model="filter.location" class="flex-grow md:flex-grow-0 md:w-[200px] max-w-full">
-      <option value="">Semua Lokasi</option>
-      <option
-        v-for="location in locations"
-        :key="'location-' + location">
-        {{ location }}
-      </option>
-    </select>
-    <input v-model="filter.date" type="date" class="flex-grow md:flex-grow-0 md:w-[170px] max-w-full" />
+    <div class="input-wrap-icon flex-grow md:flex-grow-0 md:w-[220px] max-w-full">
+      <div class="icon-wrap">
+        <i-heroicons-outline-user-circle />
+      </div>
+      <select v-model="filter.speaker" class="w-full">
+        <option value="">Semua Pemateri</option>
+        <option
+          v-for="speaker in speakers"
+          :key="'speaker-' + speaker">
+          {{ speaker }}
+        </option>
+      </select>
+    </div>
+    <div class="input-wrap-icon flex-grow md:flex-grow-0 md:w-[220px] max-w-full">
+      <div class="icon-wrap">
+        <i-heroicons-outline-location-marker />
+      </div>
+      <select v-model="filter.location" class="w-full">
+        <option value="">Semua Lokasi</option>
+        <option
+          v-for="location in locations"
+          :key="'location-' + location">
+          {{ location }}
+        </option>
+      </select>
+    </div>
+    <div class="input-wrap-icon w-full flex-grow md:flex-grow-0 md:w-[210px] max-w-full">
+      <div class="icon-wrap">
+        <i-heroicons-outline-calendar />
+      </div>
+      <input v-model="filter.date" type="date" class="w-full" />
+    </div>
     <button class="btn-primary flex-grow md:flex-grow-0" @click="onFilter">Filter</button>
   </section>
 
