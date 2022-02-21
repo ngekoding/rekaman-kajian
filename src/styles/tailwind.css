@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-100;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-md bg-gradient-to-br from-primary/80 to-primary hover:bg-gradient-to-b text-white px-4 py-2;
+}
+
+input,
+input[type="date"],
+select {
+  @apply text-ellipsis rounded-md text-gray-600 bg-slate-200 border-transparent focus:bg-slate-200/90 focus:border-slate-300 focus:ring-0;
+}
