@@ -18,7 +18,7 @@ const props = defineProps({
       <span class="inline-block w-1 h-1 bg-primary rounded-full mx-2"></span>
       <span>{{ time }}</span>
     </div>
-    <h2 class="text-2xl leading-6 text-gray-700 font-extrabold">{{ title }}</h2>
+    <h2 class="text-2xl leading-6 text-gray-700 font-extrabold uppercase">{{ title }}</h2>
     <div class="flex items-center text-gray-500 mt-2">
       <i-heroicons-outline-user-circle class="text-lg" />
       <span class="ml-2 text-sm">{{ speaker }}</span>
