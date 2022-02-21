@@ -98,8 +98,7 @@ const onFilter = () => {
         :location="event.location"
         :date="event.date"
         :time="event.time"
-        :url="event.url"
-        :tags="event.tags" />
+        :url="event.url" />
     </div>
   </section>
 

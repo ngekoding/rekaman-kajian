@@ -7,8 +7,7 @@ const props = defineProps({
    location: String,
    date: String,
    time: String,
-   url: String,
-   tags: Array
+   url: String
 })
 </script>
 

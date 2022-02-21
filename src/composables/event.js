@@ -25,11 +25,8 @@ const fetchEvents = () => {
           event.date,
           event.time,
           event.location,
-          event.tags,
           event.url
         ] = data[i]
-
-        event.tags = event.tags?.split(',') ?? []
 
         events.value.push(event)
       }
