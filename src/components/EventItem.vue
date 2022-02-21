@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-white p-5 rounded-xl shadow-sm">
+  <div class="bg-white p-5 pb-[70px] rounded-xl shadow-sm relative">
     <div class="flex flex-wrap items-center text-sm text-primary uppercase">
       <span>{{ dateIndo(date) }}</span>
       <span class="inline-block w-1 h-1 bg-primary rounded-full mx-2"></span>
@@ -23,11 +23,9 @@ const props = defineProps({
       <i-heroicons-outline-user-circle class="text-lg" />
       <span class="ml-2 text-sm">{{ speaker }}</span>
     </div>
-    <div class="mt-3 flex flex-wrap gap-2">
-      <a class="btn-primary" :href="url" target="_blank">
-        <i-heroicons-outline-play class="text-md" />
-        <span class="ml-1.5 text-sm">Buka Rekaman</span>
-      </a>
-    </div>
+    <a class="btn-primary absolute bottom-5" :href="url" target="_blank">
+      <i-heroicons-outline-play class="text-md" />
+      <span class="ml-1.5 text-sm">Buka Rekaman</span>
+    </a>
   </div>
 </template>
