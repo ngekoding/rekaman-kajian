@@ -10,7 +10,7 @@ app.use(VueGtag, {
   config: {
     id: 'G-HPW7YZV0B2',
     params: {
-      send_page_view: false,
+      send_page_view: true,
     }
   },
   enabled: import.meta.env.PROD
