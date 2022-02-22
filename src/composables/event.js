@@ -32,6 +32,9 @@ const fetchEvents = () => {
         events.value.push(event)
       }
 
+      // Show latest first
+      events.value.sort((e1, e2) => dayjs(e2.date) - dayjs(e1.date))
+
       filteredEvents.value = events.value
       loading.value = false
     })
