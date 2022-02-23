@@ -3,6 +3,7 @@ import { onMounted, computed, ref } from 'vue'
 import EventItem from '@/components/EventItem.vue'
 import EmptyState from '@/components/EmptyState.vue'
 import LoadingState from '@/components/LoadingState.vue'
+import ToTop from '@/components/ToTop.vue'
 import FSelect from '@/components/forms/FSelect.vue'
 import FDatePicker from '@/components/forms/FDatePicker.vue'
 
@@ -61,6 +62,8 @@ const locationOptions = computed(() => {
 </script>
 
 <template>
+  <!-- To Top -->
+  <to-top class="fixed bottom-4 right-4 z-50" />
 
   <header class="py-10 px-4">
     <i-heroicons-outline-microphone class="mx-auto text-4xl text-primary" />
