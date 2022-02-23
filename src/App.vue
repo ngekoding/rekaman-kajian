@@ -1,8 +1,10 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import EventItem from '@/components/EventItem.vue'
 import EmptyState from '@/components/EmptyState.vue'
 import LoadingState from '@/components/LoadingState.vue'
+import FSelect from '@/components/forms/FSelect.vue'
+import FDatePicker from '@/components/forms/FDatePicker.vue'
 
 import { dateIndoFull } from '@/composables/datetime'
 import { loading, fetchEvents, filteredEvents, filterEvent, speakers, locations } from '@/composables/event'
@@ -28,6 +30,34 @@ const onFilter = () => {
   applyFilter()
   filterEvent(filterActive)
 }
+
+const speakerOptions = computed(() => {
+  const options = speakers.value.map(speaker => {
+    return {
+      value: speaker,
+      label: speaker
+    }
+  })
+  options.unshift({
+    value: '',
+    label: 'Semua Pemateri'
+  })
+  return options
+})
+
+const locationOptions = computed(() => {
+  const options = locations.value.map(location => {
+    return {
+      value: location,
+      label: location
+    }
+  })
+  options.unshift({
+    value: '',
+    label: 'Semua Lokasi'
+  })
+  return options
+})
 </script>
 
 <template>
@@ -40,38 +70,38 @@ const onFilter = () => {
 
   <!-- Filter form -->
   <section class="container flex flex-wrap gap-3 justify-center">
-    <div class="input-wrap-icon flex-grow md:flex-grow-0 md:w-[220px] max-w-full">
-      <div class="icon-wrap">
-        <i-heroicons-outline-user-circle />
-      </div>
-      <select v-model="filter.speaker" class="w-full">
-        <option value="">Semua Pemateri</option>
-        <option
-          v-for="speaker in speakers"
-          :key="'speaker-' + speaker">
-          {{ speaker }}
-        </option>
-      </select>
-    </div>
-    <div class="input-wrap-icon flex-grow md:flex-grow-0 md:w-[220px] max-w-full">
-      <div class="icon-wrap">
-        <i-heroicons-outline-location-marker />
-      </div>
-      <select v-model="filter.location" class="w-full">
-        <option value="">Semua Lokasi</option>
-        <option
-          v-for="location in locations"
-          :key="'location-' + location">
-          {{ location }}
-        </option>
-      </select>
-    </div>
-    <div class="input-wrap-icon w-full flex-grow md:flex-grow-0 md:w-[210px] max-w-full">
-      <div class="icon-wrap">
-        <i-heroicons-outline-calendar />
-      </div>
-      <input v-model="filter.date" type="date" class="w-full" />
-    </div>
+    <f-select 
+      v-model="filter.speaker"
+      :options="speakerOptions"
+      placeholder="Pemateri..."
+      class="flex-grow md:flex-grow-0 md:w-[250px] max-w-full"
+      divider
+      filterable
+      clearable>
+      <template #icon>
+        <i-heroicons-outline-user-circle class="text-gray-600" />
+      </template>
+    </f-select>
+    <f-select 
+      v-model="filter.location"
+      :options="locationOptions"
+      placeholder="Lokasi..."
+      class="flex-grow md:flex-grow-0 md:w-[250px] max-w-full"
+      divider
+      filterable
+      clearable>
+      <template #icon>
+        <i-heroicons-outline-location-marker class="text-gray-600" />
+      </template>
+    </f-select>
+    <f-date-picker
+      v-model="filter.date"
+      class="w-full flex-grow md:flex-grow-0 md:w-[200px] max-w-full"
+      clearable>
+      <template #icon>
+        <i-heroicons-outline-calendar class="text-gray-600" />
+      </template>
+    </f-date-picker>
     <button class="btn-primary flex-grow md:flex-grow-0" @click="onFilter">Filter</button>
   </section>
 
