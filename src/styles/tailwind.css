@@ -6,24 +6,8 @@ body {
   @apply bg-slate-100;
 }
 
-.btn-primary {
-  @apply inline-flex items-center justify-center rounded-md bg-gradient-to-br from-primary/80 to-primary hover:bg-gradient-to-b text-white px-4 py-2;
-}
-
-input,
-input[type="date"],
-select {
-  @apply text-ellipsis rounded-md text-gray-600 bg-slate-200 border-transparent focus:bg-slate-200/90 focus:border-slate-300 focus:ring-0;
-}
-
-.input-wrap-icon {
-  @apply flex bg-slate-200 rounded-md;
-}
-.input-wrap-icon .icon-wrap {
-  @apply flex items-center px-2.5 bg-slate-300 text-gray-600 rounded-l-md;
-}
-.input-wrap-icon input,
-.input-wrap-icon input[type="date"],
-.input-wrap-icon select {
-  @apply rounded-l-none border-l-0 focus:border-l-0;
+@layer base {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-gradient-to-br from-secondary to-primary hover:from-accent text-white px-4 py-2;
+  }
 }

@@ -8,8 +8,17 @@ import FSelect from '@/components/forms/FSelect.vue'
 import FDatePicker from '@/components/forms/FDatePicker.vue'
 
 import { dateIndoFull } from '@/composables/datetime'
-import { loading, fetchEvents, filteredEvents, filterEvent, speakers, locations } from '@/composables/event'
-import { filter, filterActive, applyFilter } from '@/composables/event-filter'
+import {
+  loading,
+  fetchEvents,
+  events,
+  speakers,
+  locations,
+  pagination,
+  filter,
+  filterActive,
+  applyFilter
+} from '@/composables/event'
 
 onMounted(() => fetchEvents())
 
@@ -26,11 +35,6 @@ const filterDateActive = computed(() => {
   if (date) return dateIndoFull(date);
   return false;
 })
-
-const onFilter = () => {
-  applyFilter()
-  filterEvent(filterActive)
-}
 
 const speakerOptions = computed(() => {
   const options = speakers.value.map(speaker => {
@@ -59,6 +63,14 @@ const locationOptions = computed(() => {
   })
   return options
 })
+
+const showLoadMore = computed(() => {
+  return pagination.page < pagination.lastPage
+})
+
+const onLoadMore = () => {
+  fetchEvents(pagination.page + 1)
+}
 </script>
 
 <template>
@@ -105,7 +117,7 @@ const locationOptions = computed(() => {
         <i-heroicons-outline-calendar class="text-gray-600" />
       </template>
     </f-date-picker>
-    <button class="btn-primary flex-grow md:flex-grow-0" @click="onFilter">Filter</button>
+    <button class="btn-primary flex-grow md:flex-grow-0" @click="applyFilter()">Filter</button>
   </section>
 
   <!-- Active filter information -->
@@ -124,7 +136,7 @@ const locationOptions = computed(() => {
   <section class="container mt-10">
     <div class="grid gap-5 grid-cols-1 md:grid-cols-3">
       <event-item
-        v-for="(event, index) in filteredEvents"
+        v-for="(event, index) in events"
         :key="'event-' + index"
         :speaker="event.speaker"
         :title="event.title"
@@ -135,8 +147,18 @@ const locationOptions = computed(() => {
     </div>
   </section>
 
+  <div v-if="!loading && showLoadMore" class="flex justify-center mt-10">
+    <button class="btn-primary rounded-full" @click="onLoadMore()">
+      Tampilkan Lebih Banyak
+    </button>
+  </div>
+
+  <p v-if="!loading && !showLoadMore && events.length != 0" class="text-center text-gray-400 mt-8">
+    Semua data sudah ditampilkan.
+  </p>
+
   <loading-state v-if="loading" />
-  <empty-state v-else-if="filteredEvents.length == 0" />
+  <empty-state v-else-if="events.length == 0" />
 
   <footer class="text-center text-sm text-gray-400 px-5 py-10">
     <p class="text-primary">&copy; Rekaman Kajian.</p>

@@ -1,82 +1,83 @@
-import { ref, computed } from 'vue'
-import dayjs from './datetime'
-
-const events = ref([])
-const filteredEvents = ref([])
+import { ref, reactive, watch } from 'vue'
 
 const loading = ref(false)
+const events = ref([])
+const speakers = ref([])
+const locations = ref([])
 
-const fetchEvents = () => {
+const pagination = reactive({
+  perPage: 9,
+  page: 1,
+  lastPage: 0,
+  nextUrl: null
+})
+
+const filter = reactive({
+  speaker: '',
+  location: '',
+  date: ''
+})
+
+const filterActive = reactive({
+  speaker: '',
+  location: '',
+  date: ''
+})
+
+const fetchEvents = (page) => {
   loading.value = true
-  events.value = []
 
-  const key = 'AIzaSyAy8Kv-25605MUR9_vc335NH-V1izq7IIw'
-  const url = new URL('https://sheets.googleapis.com/v4/spreadsheets/1h31fQUdkTUZ31SDr4Eg-OwyQKGh2yCjgT2hyPXWKCAs/values/Form Responses 1')
+  const baseUrl = 'https://script.google.com/macros/s/AKfycbyaRICwKCfsk1HvQgV_nmfQ0dPGiM98M58s72vQL6bAdxaMojnE7-4ok7UrJAk2S-CJ/exec'
+  const params = new URLSearchParams({
+    ...filterActive,
+    perPage: pagination.perPage,
+    page: page ?? pagination.page
+  }).toString()
 
-  fetch(`${url}?key=${key}`)
+  const url = baseUrl + '?' + params
+
+  fetch(url, { redirect: 'follow' })
     .then(res => res.json())
-    .then(data => data.values)
-    .then(data => {
-      for (let i = 1; i < data.length; i++) {
-        const event = {};
-        [
-          event.timestamp,
-          event.speaker,
-          event.title,
-          event.date,
-          event.time,
-          event.location,
-          event.url
-        ] = data[i]
-
-        events.value.push(event)
+    .then(res => {
+      if (res.pagination.page == 1) {
+        events.value = res.data.events
+      } else {
+        events.value.push(...res.data.events)
       }
 
-      // Show latest first
-      events.value.sort((e1, e2) => dayjs(e2.date) - dayjs(e1.date))
+      speakers.value = res.data.speakers
+      locations.value = res.data.locations
 
-      filteredEvents.value = events.value
+      pagination.perPage = res.pagination.perPage
+      pagination.page = res.pagination.page
+      pagination.lastPage = res.pagination.lastPage
+      pagination.nextUrl = res.pagination.nextUrl
+
       loading.value = false
+    }).catch(err => {
+      console.log(err)
     })
 }
 
-const filterEvent = (filters) => {
-  const { speaker = '', location = '', date = '' } = filters
-  if (
-    !speaker && 
-    !location && 
-    !date
-  ) {
-    filteredEvents.value = events.value
-    return
-  }
-
-  filteredEvents.value = events.value.filter(e => {
-    const validSpeaker = speaker ? speaker == e.speaker : true;
-    const validLocation = location ? location == e.location : true;
-    const validDate = date ? dayjs(date).isSame(e.date) : true;
-    return validSpeaker && validLocation && validDate;
-  })
+const applyFilter = () => {
+  filterActive.speaker = filter.speaker
+  filterActive.location = filter.location
+  filterActive.date = filter.date
 }
 
-const speakers = computed(() => {
-  const allSpeakers = events.value.map(event => event.speaker)
-  const uniqueSpeakerSet = new Set(allSpeakers)
-  return [...uniqueSpeakerSet]
-})
-
-const locations = computed(() => {
-  const allLocations = events.value.map(event => event.location)
-  const uniqueLocationSet = new Set(allLocations)
-  return [...uniqueLocationSet]
+watch(filterActive, () => {
+  events.value = []
+  fetchEvents()
 })
 
 export {
   events,
   fetchEvents,
-  filterEvent,
-  filteredEvents,
   speakers,
   locations,
-  loading
+  loading,
+  pagination,
+  filter,
+  filterActive,
+  applyFilter
 }
