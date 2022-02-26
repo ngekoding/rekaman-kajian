@@ -1,6 +1,7 @@
 <script setup>
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue'
 import { useWindowScroll } from '@vueuse/core'
+import jump from 'jump.js'
 
 const props = defineProps({
   offset: {
@@ -16,10 +17,7 @@ const show = computed(() => {
 })
 
 const toTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
+  jump('body')
 }
 </script>
 
