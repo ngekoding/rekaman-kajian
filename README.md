@@ -1,6 +1,6 @@
 # Rekaman Kajian
 
-Berangkat dari sebuah permasalah sulitnya menemukan kembali rekaman kajian tertentu yang ingin disimak kembali.
+Berangkat dari sebuah permasalahan sulitnya menemukan kembali rekaman kajian tertentu yang ingin disimak kembali.
 
 Yaitu ketika kita mengikuti sebuah kajian, kemudian misalnya pada bagian tertentu kita terluput saat mencatat atau kita kurang yakin dengan catatan yang telah kita buat (mungkin karena kurang fokus, salah dengar, dst...), maka kita ingin menyimak kembali rekaman kajian tersebut berdasarkan informasi yang ada berupa nama pemateri, lokasi kajian dan tanggal kajian.
 
